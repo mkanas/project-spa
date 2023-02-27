@@ -1,26 +1,38 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addNote } from '../utils/DataUser';
+import { useState } from 'react';
 
-const [setBody, setTitle] = useState('');
-export const DetailPages = ({ body, title, eventHandleSubmit }) => {
+export const DetailPages = ({}) => {
+    const navigate = useNavigate();
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    eventHandleSubmit = (event) => {
+        event.preventDefault();
+
+        const NewData = { body, title };
+        addNote(NewData);
+
+        navigate('/');
+    };
     return (
         <div>
             <form onSubmit={eventHandleSubmit}>
-                <h1>
-                    {title}
-                    <input
-                        type='text'
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
-                    />
-                </h1>
-                <p>
-                    {body}
-                    <input
-                        type='text'
-                        value={body}
-                        onChange={(event) => setBody(event.target.value)}
-                    />
-                </p>
+                {title}
+                <input
+                    type='text'
+                    placeholder='Title...'
+                    value={title}
+                    onChange={(event) => setTitle(event.target.value)}
+                />
+
+                {body}
+                <input
+                    type='text'
+                    placeholder='body...'
+                    value={body}
+                    onChange={(event) => setBody(event.target.value)}
+                />
             </form>
         </div>
     );
